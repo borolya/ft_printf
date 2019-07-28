@@ -5,11 +5,11 @@
 
 
 
-static int integer_case(t_floating_point fp, t_smartstr *smart)
+static int integer_case(t_floating_point fp, t_smartstr *smart, int fraction_digit)
 {
 	int iter;
 
-	iter = fp.exponent - 52;
+	iter = fp.exponent - fraction_digit;
 	if (iter == 0)
 	{
 		smart->str = ft_longitoa(fp.fraction);
@@ -22,25 +22,32 @@ static int integer_case(t_floating_point fp, t_smartstr *smart)
 	return (ft_strlen(smart->str));
 }
 
-static int fraction_case(t_floating_point fp, t_smartstr *smart)
+static int fraction_case(t_floating_point fp, t_smartstr *smart, int fraction_digit)
 {
 	int iter;
 
-	iter = 52 - fp.exponent;
+	iter = fraction_digit - fp.exponent;
 	ft_smartstrncat(smart, "5", 1);
 	while (--iter > 0)
 		smart->str = mult_and_free(smart->str, ft_strdup("5"));
 	smart->str = mult_and_free(smart->str, ft_longitoa(fp.fraction));
-	return (ft_strlen(smart->str) - 52 + fp.exponent);
+	return (ft_strlen(smart->str) - fraction_digit + fp.exponent);
 }
 
-int	where_comma(t_floating_point fp, t_smartstr *smart)
+int	where_comma(t_floating_point fp, t_smartstr *smart, t_specification spec)
 {
-    if (fp.integer != 0)
+	int fraction_digit;
+
+	if (spec.long_double_mod == 1)
+		fraction_digit = 63;
+	else 
+		fraction_digit = 52;
+	if (fp.integer != 0 && spec.long_double_mod != 1)
         fp.fraction |= 0x10000000000000;
-	if (fp.exponent < 52)
-		return (fraction_case(fp, smart));
-	return (integer_case(fp, smart));
+	else if (fp.integer != 0 && spec.long_double_mod == 1) 
+	if (fp.exponent < fraction_digit)
+		return (fraction_case(fp, smart, fraction_digit));
+	return (integer_case(fp, smart, fraction_digit));
 }
 
 static void fill_digit(char *str, t_smartstr *smart, t_specification spec, int order)
@@ -119,6 +126,7 @@ char *print_float(t_floating_point fp, t_specification *spec, t_smartstr *smart,
 	int num_digits;
 	char *str;
     int filled_space;
+
     if (!spec->precision_set)
 		spec->precision = 6;
     num_digits = order > 0 ? order : 1;

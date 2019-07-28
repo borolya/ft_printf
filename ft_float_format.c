@@ -50,17 +50,27 @@ static size_t			print_float_nan_or_inf(char **pdst,
 size_t					ft_float_format(char **pdst, t_specification spec,
 							va_list ap)
 {
+	long double 		lnbr;
 	double				nbr;
 	t_floating_point	fp;
 	t_smartstr          *smart;
 	int					order;
 	
-	nbr = va_arg(ap, double);
-	ft_fill_floating_point(nbr, &fp);
+	if (spec.long_double_mod == 1)
+	{
+		lnbr = va_arg(ap, double);
+		ft_fill_floatin_point(lnbr, &fp);
+	}
+	else
+	{
+		nbr = va_arg(ap, double);
+		ft_fill_floating_point(nbr, &fp);
+	}
 	if (fp.nan || fp.inf)
 		return (print_float_nan_or_inf(pdst, spec, fp));
-	smart = ft_memalloc(sizeof(t_smartstr));
-	order = where_comma(fp, smart);
+	if (!(smart = ft_memalloc(sizeof(t_smartstr))))
+		return (0);
+	order = where_comma(fp, smart, spec);
 	*pdst = print_float(fp, &spec, smart, order);
 	if (*pdst == NULL)
 		return (0);
