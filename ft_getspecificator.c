@@ -29,6 +29,10 @@ static size_t		additional_getspecificator(const char *format,
 		pspec->specificator = A_FLOAT_UPPER;
 	else if (*format == 'f')
 		pspec->specificator = FLOAT;
+    else if (*format == 'e')
+        pspec->specificator = E_FLOAT;
+    //else if (*format == 'g')
+      //  pspec->specificator = G_FLOAT;
 	else
 	{
 		pspec->specificator = UNKNOWN;

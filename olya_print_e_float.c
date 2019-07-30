@@ -1,26 +1,27 @@
 #include "libftprintf.h"
-
-int ft_count_digit(unsigned long long int nbr)
-{
-    int digit;
-
-    digit = 1;
-    while (nbr /= 10 > 0)
-    return (nbr);
-}
+#include <stdlib.h>
 
 
-void fill_digits(char *str, int order, t_specification spec, t_smartstr smart);
+#include <stdio.h>
+void fill_e_digits(char *str, int order, t_specification spec, t_smartstr smart)
 {
     int i;
     char *exp;
+    int prec_counter;
+
     i = 0;
-    str[i] = smart->str[0];
-    if (spec->precision != 0)
+    str[i++] = smart.str[0];
+    if (spec.precision != 0)  
         str[i++] = '.';
-    while(i - 1 < spec->precision && smart.str[i] != '\0')
-        str[i++] = smart.str[i - 1];
-    while(i - 1 < spec->precision)
+    prec_counter = -1;
+    //printf("str = %s\n", smart.str);
+    while(++prec_counter < spec.precision && smart.str[i - 1] != '\0')
+    {
+        str[i] = smart.str[i - 1];
+        i++;
+        //printf("char str = %c, char smart = %c\n", str[i], str[i-1]);
+    }
+    while(++prec_counter <= spec.precision)
         str[i++] = '0';
     str[i++] = 'e';
     str[i++] = order < 0 ? '-' : '+';
@@ -30,34 +31,33 @@ void fill_digits(char *str, int order, t_specification spec, t_smartstr smart);
         exp = ft_longitoa(-order);
     else 
         exp = ft_longitoa(order);
-    ft_strcpy(str, exp);
+    ft_strcpy(str + i, exp);
     free(exp);
 }
 
 
-
+#include <stdio.h>
 char *print_e_float(t_floating_point fp, t_specification *spec, 
                             t_smartstr smart, int order)
 {
     char *str;
     int num_digits;
     int filled_space;
-    char *exp;
     unsigned int count_digit;
 
     if(!spec->precision_set)
         spec->precision = 6;
-    num_digits = spec->precision == 0 ? 4 : 3;//e +int part +  sign + common
-    num_digits += spec->precision;
+    num_digits = spec->precision == 0 ? 3 : 4;//e +int part +  sign + common
+    num_digits += spec->precision;//order поместиться ли?
     count_digit = (order < 0) ? ft_count_digit(-order) : ft_count_digit(order);
     num_digits += (count_digit > 1) ? count_digit : 2;
     if (fp.sign || spec->force_sign || spec->force_spacing)
 		num_digits++;
-	if (spec->minwidth < num_digits)
+    if (spec->minwidth < num_digits)
 		spec->minwidth = num_digits;
 	if (!(str = (char *)malloc(sizeof(char) * spec->minwidth + 1)))
 		return (NULL);
     filled_space = fill_space(str, num_digits, spec, fp);
-    fill_digits(str + filled_space, order, *spec, smart);
+    fill_e_digits(str + filled_space, order, *spec, smart);
     return(str);
 }

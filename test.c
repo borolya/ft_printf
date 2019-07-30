@@ -1,30 +1,14 @@
-//#include "libftprintf.h"
+#include "libftprintf.h"
 #include <stdio.h>
 #include <math.h>
 int main (void)
 {
-	double d;
-	unsigned long  byte[2];
-	unsigned long int b;
-	void *tmp;
-
-	tmp = (void *)&d;
-
-	d = sqrt(-5);
-	b = *((unsigned long *)&d);
-	byte[0] = *((unsigned long *)tmp);
-	byte[1] = *((unsigned long *)(tmp + 8));
-
-	printf("%p\n", tmp);
-	printf("%p\n", &(byte[0]));
-	printf("%p\n", &(byte[1]));
-	printf("%p\n", (tmp + 8));
-	printf("%lu\n", sizeof(byte[0]));
-	printf("%ld\n", byte[0]);
-	printf("%ld\n", byte[1]);
-	printf("%f\n", d);
-
-	//printf ("printf = %d", printf("re |%.99Lf|\n", d));
-	//printf(t_printf = %d", ft_printf("my |%.99Lf|\n", d));
+	
+	//printf("%s", ft_longitoa(3453524));
+	printf("{%f}{%lf}{%Lf}\n", 1.6465424242242454654, -144456544464.6465424242242454654, -144456544464.6465424242242454654l);
+	//printf("
+	ft_printf("{%f}{%lf}{%Lf}\n", 1.42, -144456544464.6465424242242454654, -144456544464.6465424242242454654l);
+	//printf("%.2f\n", 10.4555);
+	//ft_printf("%.2f\n", 10.4555);
 	return (0);
 }

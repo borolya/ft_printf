@@ -1,37 +1,34 @@
 #include "libftprintf.h"
 #include <stdlib.h>
-static char	*fill(unsigned long long int i, unsigned long long int n, char *str)
-{
-	int j;
 
-	j = 0;
-	while (i > 0)
-	{
-		str[j] = n / i + '0';
-		n = n % i;
-		i = i / 10;
-		j++;
-	}
-	str[j] = '\0';
-	return (str);
+
+#include <stdio.h>
+int ft_count_digit(unsigned long long int nbr)
+{
+	int digit;
+
+	digit = 1;
+	
+	while ((nbr /= 10) > 0)
+		digit++;
+	return (digit);
 }
-//change 
+
 char *ft_longitoa(unsigned long long int n)//unsigned
 {
-	char			*str;
-	unsigned long long int	i;
-	unsigned int		count;
+	char	*str;
+	int		count;
 
-	count = 0;
-	i = 1;
-	while (n / i > 9)
-	{
-		i = i * 10;
-		count++;
-	}
-	if (!(str = (char*)malloc(sizeof(char) * (count + 1 + 1))))
+	count = ft_count_digit(n);
+	if (!(str = (char*)malloc(sizeof(char) * (count + 1))))
 		return (NULL);
-	return (fill( i, n, str));
+	str[count] = '\0';
+	while (--count >= 0)
+	{
+		str[count] = n % 10 + '0'; 
+		n /= 10;
+	}
+	return (str);
 }
 
 void	*ft_memalloc(size_t size)

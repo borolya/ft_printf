@@ -34,6 +34,8 @@ typedef	enum			e_specificator
 	A_FLOAT,
 	A_FLOAT_UPPER,
 	FLOAT,
+    E_FLOAT,
+    G_FLOAT,
 }						t_specificator;
 
 typedef struct			s_smartstr
@@ -134,19 +136,35 @@ unsigned int			ft_utf8_convert(unsigned int c, int bytes);
 void					ft_format_hex(unsigned long long int nbr,
 										t_specification spec,
 										char *str, char b);
-void					ft_fill_floating_point(double nbr,
-												t_floating_point *dst);
-void					ft_fill_long_floating_point(long double nbr,
-												t_floating_point *dst);
+size_t					ft_e_float_format(char **pdst, t_specification spec,
+							va_list ap);
+//void					ft_fill_floating_point(double nbr,
+//												t_floating_point *dst);
+//void					ft_fill_long_floating_point(long double nbr,
+//												t_floating_point *dst);
 int						ft_count_digits_signed(long long int nbr);
 
 ///olya....
 char *mult_and_free(char *s1,  char *s2);
 char *print_float(t_floating_point fp, t_specification *spec, t_smartstr *smart, int order);
-int	where_comma(t_floating_point fp, t_smartstr *smart);
+int	where_comma(t_floating_point fp, t_smartstr *smart, t_specification spec);
+char *print_e_float(t_floating_point fp, t_specification *spec, 
+                            t_smartstr smart, int order);
+
+
+size_t			print_float_nan_or_inf(char **pdst,
+												t_specification spec,
+												t_floating_point num);
+void					ft_fill_floating_point(double nbr,
+												t_floating_point *dst);
+void					ft_fill_long_floating_point(long double nbr,
+												t_floating_point *dst);
+int fill_space(char *str, int num_digits, t_specification *spec, t_floating_point fp);                            
+//lib
+int ft_count_digit(unsigned long long int nbr);
 char *ft_longitoa(unsigned long long int n);
-char	*ft_strdup(const char *s);
 void	*ft_memalloc(size_t size);
-char *ft_longitoa(unsigned long long int n);
+char	*ft_strdup(const char *s);
+
 
 #endif

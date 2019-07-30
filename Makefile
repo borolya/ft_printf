@@ -33,16 +33,17 @@ SOURCES = ft_printf.c			        \
 		  ft_pointer_format.c			\
 		  ft_afloat_format.c			\
 		  ft_afloat_upper_format.c		\
-		  ft_float_format.c				\
 		  ft_utf8_count_bytes.c			\
 		  ft_utf8_convert.c				\
 		  ft_format_hex.c				\
-		  ft_fill_floating_point.c		\
-		  ft_fill_long_floating_point.c	\
 		  ft_count_digits_signed.c		\
-			olya_multchar.c	\
-			olya_float.c			  
-
+			olya_efloating_format.c \
+			olya_ft_fill_floating_point.c \
+			olya_ft_float_format.c \
+			olya_libft.c \
+			olya_multchar.c \
+			olya_print_e_float.c \
+			olya_print_float.c
 OBJECTS = $(SOURCES:.c=.o)
 
 HEADER = $(NAME:.a=.h)

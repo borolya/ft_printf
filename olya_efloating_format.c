@@ -1,5 +1,8 @@
 #include "libftprintf.h"
 
+#include <stdlib.h>
+
+#include <stdio.h>
 size_t					ft_e_float_format(char **pdst, t_specification spec,
 							va_list ap)
 {
@@ -11,11 +14,12 @@ size_t					ft_e_float_format(char **pdst, t_specification spec,
 	nbr = va_arg(ap, double);
     ft_fill_floating_point(nbr, &fp);
     if (fp.nan || fp.inf)
-        return (printf_float_nan_or_inf(pdst, spec, fp));
+        return (print_float_nan_or_inf(pdst, spec, fp));
     if (!(smart = ft_memalloc(sizeof(t_smartstr))))
         return (0);
-    order = where_comma(fp, smart);
+    order = where_comma(fp, smart, spec);
     order--;
+    //printf("order = %d \n", order);
 	*pdst = print_e_float(fp, &spec, *smart, order);
 	if (*pdst == NULL)
 		return (0);
