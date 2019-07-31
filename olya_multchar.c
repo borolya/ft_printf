@@ -6,7 +6,7 @@
 
 
 
-static void reversechar(char *s)
+void reversestr(char *s)
 {
 	int l;
 	int i;
@@ -50,21 +50,22 @@ static void sum_char(t_smartstr *smart, const char *term, int j)//all reverse
 	}
 }
 
-static char *mult_to_letter(char *s, char a)
+static char *mult_to_letter(char *s, char a)//do it without srtsmart переписать!!!!!!!!!!!!!!!!!
 {
 	int i;
 	int n;
 	char *tmp;
 	t_smartstr *smart;
 
-	smart = ft_memalloc(sizeof(t_smartstr));
+	if (!(smart = ft_memalloc(sizeof(t_smartstr))))
+        return (NULL);
 	ft_smartstrncat(smart, "0", 1);
   	i = 0;
 	while (s[i])
 	{
 		n =  ((s[i]) - '0') * (a - '0');
 		tmp = ft_longitoa(n);
-		reversechar(tmp);
+		reversestr(tmp);
 		sum_char(smart, tmp, i);
 		free(tmp);
 		i++;
@@ -75,29 +76,33 @@ static char *mult_to_letter(char *s, char a)
 	return (tmp);
 }
 
-char *mult_and_free(char *s1,  char *s2)//better if s1 longer//
+int mult_and_free(t_smartstr *smart,  char *s2)// reversr s1 and not reverse ?
 {
 	t_smartstr *mult;
 	int i;
 	char *tmp;
+    char *s1;
 
-	reversechar(s1);
-	reversechar(s2);
-	mult = ft_memalloc(sizeof(t_smartstr));
+    s1 = smart->str;
+	reversestr(s2);
+	if (!(mult = ft_memalloc(sizeof(t_smartstr))))
+        return (1);
 	ft_smartstrncat(mult, "0", 1);
 	i = 0;
 	while (s2[i])
 	{
 		tmp = mult_to_letter(s1, s2[i]);
-		sum_char(mult, tmp, i);
+		if (tmp == NULL)
+            return (1);
+        sum_char(mult, tmp, i);
 		free(tmp);
 		i++;
 	}
-	reversechar(mult->str);
-	tmp = ft_strdup(mult->str);
+    ft_bzero(smart->str, smart->len);
+    smart->len = 0;
+    ft_smartstrncat(smart, mult->str, mult->len);
 	free(mult->str);
 	free(mult);
-	free(s1);
 	free(s2);
-	return (tmp);
+    return (0);
 }

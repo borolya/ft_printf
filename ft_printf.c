@@ -70,6 +70,8 @@ static size_t	get_specification(const char *format,
 		pspec->precision_set = *s == '.' ? 1 : pspec->precision_set;
 		s += (ft_instr(*s, "0123456789*")) ? update_mw_and_prec(s, pspec) : 1;
 	}
+    //olya
+    pspec->force_zeroes = pspec->force_zeroes * !pspec->align_left;
 	s += ft_getspecificator(s, pspec);
 	return (s - format);
 }

@@ -145,7 +145,7 @@ size_t					ft_e_float_format(char **pdst, t_specification spec,
 int						ft_count_digits_signed(long long int nbr);
 
 ///olya....
-char *mult_and_free(char *s1,  char *s2);
+int mult_and_free(t_smartstr *smart,  char *s2);
 char *print_float(t_floating_point fp, t_specification *spec, t_smartstr *smart, int order);
 int	where_comma(t_floating_point fp, t_smartstr *smart, t_specification spec);
 char *print_e_float(t_floating_point fp, t_specification *spec, 
@@ -165,6 +165,7 @@ int ft_count_digit(unsigned long long int nbr);
 char *ft_longitoa(unsigned long long int n);
 void	*ft_memalloc(size_t size);
 char	*ft_strdup(const char *s);
+void reversestr(char *s);
 
 
 #endif

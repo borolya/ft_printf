@@ -37,7 +37,7 @@ SOURCES = ft_printf.c			        \
 		  ft_utf8_convert.c				\
 		  ft_format_hex.c				\
 		  ft_count_digits_signed.c		\
-			olya_efloating_format.c \
+			olya_e_floating_format.c \
 			olya_ft_fill_floating_point.c \
 			olya_ft_float_format.c \
 			olya_libft.c \

@@ -1,6 +1,6 @@
 #include "libftprintf.h"
 #include <stdarg.h>
-
+/*
 size_t  ft_float_g_format(char **pdst, t_specification spec, 
 								va_list ap)
 {
@@ -13,4 +13,6 @@ size_t  ft_float_g_format(char **pdst, t_specification spec,
 	if (!(smart = ft_memalloc(sizeof(t_smartstr))))
 		return (0);
 	if ()
-}						
+}						    
+
+*/

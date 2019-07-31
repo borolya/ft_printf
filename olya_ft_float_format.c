@@ -47,7 +47,6 @@ size_t			print_float_nan_or_inf(char **pdst,
 	return (spec.minwidth);
 }
 
-
 #include <stdio.h>
 size_t					ft_float_format(char **pdst, t_specification spec,
 							va_list ap)
@@ -56,8 +55,9 @@ size_t					ft_float_format(char **pdst, t_specification spec,
 	double				nbr;
 	t_floating_point	fp;
 	t_smartstr          *smart;
-	int					order;
-	
+	//int					order;
+	int             comma;//с конца отсчитываем это число и ставим запятую  
+
     if (spec.long_double_mod == 1)
 	{  
 		lnbr = va_arg(ap, long double);
@@ -72,8 +72,8 @@ size_t					ft_float_format(char **pdst, t_specification spec,
 		return (print_float_nan_or_inf(pdst, spec, fp));
 	if (!(smart = ft_memalloc(sizeof(t_smartstr))))
 		return (0);
-	order = where_comma(fp, smart, spec);
-	*pdst = print_float(fp, &spec, smart, order);
+	comma = where_comma(fp, smart, spec);
+	*pdst = print_float(fp, &spec, smart, comma);
 	if (*pdst == NULL)
 		return (0);
 	free(smart->str);

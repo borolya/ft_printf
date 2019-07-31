@@ -35,6 +35,35 @@ void fill_e_digits(char *str, int order, t_specification spec, t_smartstr smart)
     free(exp);
 }
 
+int ft_float_e_rounding(t_smartstr *smart, int precision)
+{
+    int r_check;
+
+    r_check = smart->len - 2 - precision;
+    if (r_check > 0 && (unsigned long)r_check < smart->len)
+	{
+		if ((smart->str[r_check] == '5' && smart->str[r_check] != '\0' && (smart->str[r_check] - '0') % 2 == 1)
+			|| (smart->str[r_check] > '5' && smart->str[r_check] <= '9'))
+		{
+			smart->str[r_check] = '0';
+			if ((unsigned long)r_check == smart->len - 1)
+				ft_smartstrncat(smart, "1", 1);
+			else
+				smart->str[r_check + 1]++;
+			r_check++;
+		}
+		while (smart->str[r_check] == 58)
+		{
+			smart->str[r_check] = '0';
+			if ((unsigned long)r_check == smart->len - 1)
+				ft_smartstrncat(smart, "1", 1);
+			else
+				smart->str[r_check + 1]++;
+			r_check++;	
+		}
+	}
+    return (0);
+}
 
 #include <stdio.h>
 char *print_e_float(t_floating_point fp, t_specification *spec, 
@@ -47,6 +76,8 @@ char *print_e_float(t_floating_point fp, t_specification *spec,
 
     if(!spec->precision_set)
         spec->precision = 6;
+    order +=ft_float_e_rounding(&smart, spec->precision);
+    reversestr(smart.str);
     num_digits = spec->precision == 0 ? 3 : 4;//e +int part +  sign + common
     num_digits += spec->precision;//order поместиться ли?
     count_digit = (order < 0) ? ft_count_digit(-order) : ft_count_digit(order);
