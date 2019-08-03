@@ -145,13 +145,21 @@ size_t					ft_e_float_format(char **pdst, t_specification spec,
 int						ft_count_digits_signed(long long int nbr);
 
 ///olya....
-int mult_and_free(t_smartstr *smart,  char *s2);
-char *print_float(t_floating_point fp, t_specification *spec, t_smartstr *smart, int order);
-int	where_comma(t_floating_point fp, t_smartstr *smart, t_specification spec);
+
+char *print_float(t_floating_point fp, t_specification *spec, char *decimal, int comma);
+int	where_comma(t_floating_point fp, char **decimal, t_specification spec);
 char *print_e_float(t_floating_point fp, t_specification *spec, 
-                            t_smartstr smart, int order);
+							char *decimal, int order);
+char			*ft_strjoin(char const *s1, char const *s2);
+
+void mult_to_letter(char *result, char a);
+void mult_to_char(const char *s1, const char *s2, char *result);
+void mult_to_int(const char *str, unsigned long long nbr, char *result);
 
 
+
+int not_empty_end(const char *str, int count);
+//char *mult_to_letter(const char *s, int len, char a);
 size_t			print_float_nan_or_inf(char **pdst,
 												t_specification spec,
 												t_floating_point num);

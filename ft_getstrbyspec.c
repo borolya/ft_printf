@@ -40,7 +40,7 @@ static t_outputfunc	get_output_function(t_specificator specificator)
 	if (specificator == FLOAT)
 		return (ft_float_format);
     if (specificator == E_FLOAT)
-        return (ft_e_float_format);
+       return (ft_e_float_format);
     //if (specificator == G_FLOAT)
       //  return (ft_g_float_format);
 	return (NULL);

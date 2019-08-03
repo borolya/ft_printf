@@ -40,7 +40,6 @@ void					ft_fill_floating_point(double nbr,
 		}
 		dst->fraction <<= 1;
 		dst->fraction &= 0xFFFFFFFFFFFFFFFF;
-        dst->exponent--;
 	}
 }
 
@@ -62,22 +61,16 @@ void					ft_fill_long_floating_point(long double nbr,
 	dst->nan = dst->exponent == 16384 && dst->fraction != 0 ? 1 : 0;//add quite NAN
 	dst->inf = dst->exponent == 16384 && dst->fraction == 0 ? 1 : 0;
     dst->fraction = byte_repr[0] & 0xFFFFFFFFFFFFFFFF;
-    if (dst->exponent == -16383 && dst->fraction == 0)//zero
-	//		dst->integer = 0;
-		dst->exponent = 0;//for useful
+    if (dst->exponent == -16383 && dst->fraction == 0)
+		dst->exponent = 0;
 	else if (dst->exponent == -16383)
-        dst->exponent = -16382;
-	/*
-	else if (dst->exponent == -1023)
 	{
 		while (!(dst->fraction & 0x8000000000000))
 		{
 			dst->fraction <<= 1;
 			dst->exponent--;
 		}
-		dst->fraction <<= 1;
+        dst->fraction <<= 1;
 		dst->fraction &= 0xFFFFFFFFFFFFFFFF;
-        dst->exponent--;
 	}
-	*/
 }

@@ -3,6 +3,45 @@
 
 
 #include <stdio.h>
+
+static	size_t	count(char const *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
+
+char			*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*str;
+	size_t	i;
+
+	if (!s1 || !s2)
+		return (NULL);
+	if (!(str = malloc(count(s1) + count(s2) + 1)))
+		return (NULL);
+	i = 0;
+	while (*s1)
+	{
+		str[i] = *s1;
+		i++;
+		s1++;
+	}
+	while (*s2)
+	{
+		str[i] = *s2;
+		i++;
+		s2++;
+	}
+	str[i] = '\0';
+	return (str);
+}
+
+
+
 int ft_count_digit(unsigned long long int nbr)
 {
 	int digit;

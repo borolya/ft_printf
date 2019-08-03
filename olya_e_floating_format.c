@@ -8,22 +8,18 @@ size_t					ft_e_float_format(char **pdst, t_specification spec,
 {
 	double				nbr;
 	t_floating_point	fp;
-	t_smartstr          *smart;
+	char                *decimal;
 	int					order;
 	
 	nbr = va_arg(ap, double);
     ft_fill_floating_point(nbr, &fp);
     if (fp.nan || fp.inf)
         return (print_float_nan_or_inf(pdst, spec, fp));
-    if (!(smart = ft_memalloc(sizeof(t_smartstr))))
-        return (0);
-    order = where_comma(fp, smart, spec);
-    order = -order + smart->len - 1;
-    //printf("order = %d \n", order);
-	*pdst = print_e_float(fp, &spec, *smart, order);
+    order = where_comma(fp, &decimal, spec);
+    order = -order + ft_strlen(decimal) - 1;
+	*pdst = print_e_float(fp, &spec, decimal, order);
 	if (*pdst == NULL)
 		return (0);
-	free(smart->str);
-	free(smart);
+	free(decimal);
 	return (spec.minwidth);
 }

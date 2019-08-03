@@ -37,13 +37,13 @@ SOURCES = ft_printf.c			        \
 		  ft_utf8_convert.c				\
 		  ft_format_hex.c				\
 		  ft_count_digits_signed.c		\
-			olya_e_floating_format.c \
 			olya_ft_fill_floating_point.c \
 			olya_ft_float_format.c \
 			olya_libft.c \
-			olya_multchar.c \
-			olya_print_e_float.c \
-			olya_print_float.c
+			olya_mult_new.c \
+			olya_print_float_new.c \
+			olya_e_floating_format.c \
+			olya_print_e_float.c
 OBJECTS = $(SOURCES:.c=.o)
 
 HEADER = $(NAME:.a=.h)

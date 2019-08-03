@@ -22,16 +22,32 @@ size_t			print_float_nan_or_inf(char **pdst,
 	char	*str;
 	char	*arg;
 
-	if (num.nan)
-		arg = "nan";
-	else if (num.sign)
-		arg = "-inf";
-	else if (spec.force_sign)
-		arg = "+inf";
-	else if (spec.force_spacing)
-		arg = " nan";
-	else
-		arg = "inf";
+    if (spec.long_long_mod)
+    {
+        if (num.nan)
+            arg = "NAN";
+        else if (num.sign)
+            arg = "-INF";
+        else if (spec.force_sign)
+            arg = "+INF";
+        else if (spec.force_spacing)
+            arg = " NAN";
+        else
+            arg = "INF";
+    }
+    else
+    {
+        if (num.nan)
+            arg = "nan";
+        else if (num.sign)
+            arg = "-inf";
+        else if (spec.force_sign)
+            arg = "+inf";
+        else if (spec.force_spacing)
+            arg = " nan";
+        else
+            arg = "inf";
+    }
 	len = ft_strlen(arg);
 	spec.precision = len;
 	if (spec.minwidth < spec.precision)
@@ -54,8 +70,7 @@ size_t					ft_float_format(char **pdst, t_specification spec,
 	long double 		lnbr;
 	double				nbr;
 	t_floating_point	fp;
-	t_smartstr          *smart;
-	//int					order;
+	char          *decimal;
 	int             comma;//с конца отсчитываем это число и ставим запятую  
 
     if (spec.long_double_mod == 1)
@@ -70,13 +85,10 @@ size_t					ft_float_format(char **pdst, t_specification spec,
 	}
 	if (fp.nan || fp.inf)
 		return (print_float_nan_or_inf(pdst, spec, fp));
-	if (!(smart = ft_memalloc(sizeof(t_smartstr))))
-		return (0);
-	comma = where_comma(fp, smart, spec);
-	*pdst = print_float(fp, &spec, smart, comma);
+	comma = where_comma(fp, &decimal, spec);
+	*pdst = print_float(fp, &spec, decimal, comma);
 	if (*pdst == NULL)
 		return (0);
-	free(smart->str);
-	free(smart);
+	free(decimal);
 	return (spec.minwidth);
 }
