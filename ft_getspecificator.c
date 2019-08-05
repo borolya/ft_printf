@@ -29,19 +29,19 @@ static size_t		additional_getspecificator(const char *format,
 		pspec->specificator = A_FLOAT_UPPER;
 	else if (*format == 'f' || *format == 'F')
 		pspec->specificator = FLOAT;
-    else if (*format == 'e')
-        pspec->specificator = E_FLOAT;
-    //else if (*format == 'g')
-      //  pspec->specificator = G_FLOAT;
+	else if (*format == 'e')
+		pspec->specificator = E_FLOAT;
+	else if (*format == 'g')
+		pspec->specificator = G_FLOAT;
 	else
 	{
 		pspec->specificator = UNKNOWN;
 		pspec->ch = *format;
 		return (*format == '\0' ? 0 : 1);
 	}
-    if (*format == 'D' || *format == 'O' ||
+	if (*format == 'D' || *format == 'O' ||
 		*format == 'U' || *format == 'C' ||
-        *format == 'S' || *format == 'F')
+		*format == 'S' || *format == 'F')
 		pspec->long_long_mod = 1;
 	return (res);
 }
@@ -70,7 +70,7 @@ size_t				ft_getspecificator(const char *format,
 		return (additional_getspecificator(format, pspec));
 	if (*format == 'D' || *format == 'O' ||
 		*format == 'U' || *format == 'C' ||
-        *format == 'S' || *format == 'F')
+		*format == 'S' || *format == 'F')
 		pspec->long_long_mod = 1;
 	return (res);
 }

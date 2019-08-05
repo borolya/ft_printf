@@ -43,7 +43,8 @@ SOURCES = ft_printf.c			        \
 			olya_mult_new.c \
 			olya_print_float_new.c \
 			olya_e_floating_format.c \
-			olya_print_e_float.c
+			olya_print_e_float.c \
+			olya_g_float_format.c
 OBJECTS = $(SOURCES:.c=.o)
 
 HEADER = $(NAME:.a=.h)

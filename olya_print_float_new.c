@@ -140,7 +140,7 @@ static void fill_digit(char *str, char *decimal, t_specification spec, int order
 			j++;
 		}
 	}
-	while (j < spec.precision)
+	while (j < spec.precision && spec.specificator != G_FLOAT)
 	{
 		str[j + i] = '0';
 		j++;
@@ -186,13 +186,13 @@ int not_empty_end(const char *str, int count)
 	return (0);
 }
 
-int ft_float_rounding(char *decimal, int comma, int precision)
+int ft_float_rounding(char *decimal, int comma, int r_check)
 {
-	int r_check;
+	//int r_check;
 	int lenstr;
 
 	lenstr = ft_strlen(decimal);
-	r_check = comma - precision - 1;
+	//r_check = comma - precision - 1;
 	if (r_check >= 0 && r_check < lenstr)
 	{
 		/*  && (decimal[r_check + 1] - '0') % 2 == 1 */
@@ -234,7 +234,7 @@ char *print_float(t_floating_point fp, t_specification *spec, char *decimal, int
 
 	if (!spec->precision_set)
 		spec->precision = 6;
-	order = ft_float_rounding(decimal, comma, spec->precision);
+	order = ft_float_rounding(decimal, comma, comma - spec->precision - 1);
 	reversestr(decimal);
 	num_digits = order > 0 ? order : 1;
 	num_digits += (spec->precision == 0 && !spec->alt_print)  ? 0 : 1;

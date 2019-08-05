@@ -7,10 +7,10 @@ int main()
 	double d;
 	void	*addr;
 
-	d = 0.2465;
+	d = 0.008;
 
-	printf("re  = |%-13e|\n", d);
+	printf("re  = |%.2g|\n", d);
 	printf("\n");
-	ft_printf("my  = |%-13e|\n", d);
+	//ft_printf("my  = |%.7g|\n", d);
 	return (0);
 }

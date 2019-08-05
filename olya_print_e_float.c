@@ -19,7 +19,7 @@ void fill_e_digits(char *str, int order, t_specification spec, char *decimal)
 		str[i] = decimal[i - 1];
 		i++;
 	}
-	while(++prec_counter <= spec.precision)
+	while(++prec_counter <= spec.precision && spec.specificator != G_FLOAT)
 		str[i++] = '0';
 	str[i++] = 'e';
 	str[i++] = order < 0 ? '-' : '+';
@@ -95,6 +95,6 @@ char *print_e_float(t_floating_point fp, t_specification *spec,
 	if (!(str = (char *)malloc(sizeof(char) * spec->minwidth + 1)))
 		return (NULL);
 	filled_space = fill_space(str, num_digits, spec, fp);
-	fill_e_digits(str + filled_space, order, *spec, decimal);
+	fill_e_digits(str + filled_space, order, *spec, decimal;
 	return(str);
 }

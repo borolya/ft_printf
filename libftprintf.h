@@ -169,6 +169,8 @@ void					ft_fill_long_floating_point(long double nbr,
 												t_floating_point *dst);
 int fill_space(char *str, int num_digits, t_specification *spec, t_floating_point fp);                            
 //lib
+size_t  ft_g_float_format(char **pdst, t_specification spec, 
+								va_list ap);
 int ft_count_digit(unsigned long long int nbr);
 char *ft_longitoa(unsigned long long int n);
 void	*ft_memalloc(size_t size);
