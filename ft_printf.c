@@ -6,7 +6,7 @@
 /*   By: mbalon-s <mbalon-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 17:17:31 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/03/01 15:25:02 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/08/07 19:14:39 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static size_t	get_specification(const char *format,
 		pspec->force_sign = *s == '+' ? 1 : pspec->force_sign;
 		pspec->force_spacing = *s == ' ' ? 1 : pspec->force_spacing;
 		pspec->force_zeroes = *s == '0' && !pspec->precision_set ?
-											1 : pspec->force_zeroes;
+			1 * !pspec->align_left : pspec->force_zeroes * !pspec->align_left;
 		pspec->alt_print = *s == '#' ? 1 : pspec->alt_print;
 		pspec->short_short_mod = *s == 'h' && s[1] == 'h' ?
 											1 : pspec->short_short_mod;
@@ -70,8 +70,6 @@ static size_t	get_specification(const char *format,
 		pspec->precision_set = *s == '.' ? 1 : pspec->precision_set;
 		s += (ft_instr(*s, "0123456789*")) ? update_mw_and_prec(s, pspec) : 1;
 	}
-    //olya
-    pspec->force_zeroes = pspec->force_zeroes * !pspec->align_left;
 	s += ft_getspecificator(s, pspec);
 	return (s - format);
 }

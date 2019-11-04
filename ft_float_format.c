@@ -14,40 +14,47 @@
 #include <stdarg.h>
 #include "libftprintf.h"
 
-size_t			print_float_nan_or_inf(char **pdst,
-												t_specification spec,
+void	ft_upper_nan_or_inf(char **arg, t_floating_point num,
+											t_specification spec)
+{
+	if (num.nan)
+		*arg = "NAN";
+	else if (num.sign)
+		*arg = "-INF";
+	else if (spec.force_sign)
+		*arg = "+INF";
+	else if (spec.force_spacing)
+		*arg = " NAN";
+	else
+		*arg = "INF";
+}
+
+void	ft_lower_nan_or_inf(char **arg, t_floating_point num,
+											t_specification spec)
+{
+	if (num.nan)
+		*arg = "nan";
+	else if (num.sign)
+		*arg = "-inf";
+	else if (spec.force_sign)
+		*arg = "+inf";
+	else if (spec.force_spacing)
+		*arg = " nan";
+	else
+		*arg = "inf";
+}
+
+size_t	ft_print_float_nan_or_inf(char **pdst, t_specification spec,
 												t_floating_point num)
 {
 	int		len;
 	char	*str;
 	char	*arg;
 
-    if (spec.long_long_mod)
-    {
-        if (num.nan)
-            arg = "NAN";
-        else if (num.sign)
-            arg = "-INF";
-        else if (spec.force_sign)
-            arg = "+INF";
-        else if (spec.force_spacing)
-            arg = " NAN";
-        else
-            arg = "INF";
-    }
-    else
-    {
-        if (num.nan)
-            arg = "nan";
-        else if (num.sign)
-            arg = "-inf";
-        else if (spec.force_sign)
-            arg = "+inf";
-        else if (spec.force_spacing)
-            arg = " nan";
-        else
-            arg = "inf";
-    }
+	if (spec.long_long_mod)
+		ft_upper_nan_or_inf(&arg, num, spec);
+	else
+		ft_lower_nan_or_inf(&arg, num, spec);
 	len = ft_strlen(arg);
 	spec.precision = len;
 	if (spec.minwidth < spec.precision)
@@ -63,18 +70,14 @@ size_t			print_float_nan_or_inf(char **pdst,
 	return (spec.minwidth);
 }
 
-#include <stdio.h>
-size_t					ft_float_format(char **pdst, t_specification spec,
-							va_list ap)
+size_t	ft_float_format(char **pdst, t_specification spec, va_list ap)
 {
-	long double 		lnbr;
+	long double			lnbr;
 	double				nbr;
 	t_floating_point	fp;
-	char          *decimal;
-	int             comma;//с конца отсчитываем это число и ставим запятую  
 
-    if (spec.long_double_mod == 1)
-	{  
+	if (spec.long_double_mod == 1)
+	{
 		lnbr = va_arg(ap, long double);
 		ft_fill_long_floating_point(lnbr, &fp);
 	}
@@ -84,11 +87,9 @@ size_t					ft_float_format(char **pdst, t_specification spec,
 		ft_fill_floating_point(nbr, &fp);
 	}
 	if (fp.nan || fp.inf)
-		return (print_float_nan_or_inf(pdst, spec, fp));
-	comma = where_comma(fp, &decimal, spec);
-	*pdst = print_float(fp, &spec, decimal, comma);
+		return (ft_print_float_nan_or_inf(pdst, spec, fp));
+	*pdst = ft_take_decimal_float(fp, &spec);
 	if (*pdst == NULL)
 		return (0);
-	free(decimal);
 	return (spec.minwidth);
 }

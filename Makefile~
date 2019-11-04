@@ -35,16 +35,16 @@ SOURCES = ft_printf.c			        \
 		  ft_utf8_convert.c				\
 		  ft_format_hex.c				\
 		  ft_count_digits_signed.c		\
-          ft_fill_floating_point.c \
-		  ft_float_format.c		\
-		  ft_libft.c					\
-		  ft_mult.c					\
-		  ft_print_float.c			\
-		  ft_e_floating_format.c		\
-		  ft_print_e_float.c			\
-		  ft_g_float_format.c			\
-		  ft_decimal_notation.c	\
-		  ft_float_rounding.c		\
+          olya_ft_fill_floating_point.c \
+		  olya_ft_float_format.c		\
+		  olya_libft.c					\
+		  olya_mult.c					\
+		  olya_print_float.c			\
+		  olya_e_floating_format.c		\
+		  olya_print_e_float.c			\
+		  olya_g_float_format.c			\
+		  olya_ft_decimal_notation.c	\
+		  olya_ft_float_rounding.c		\
 		  ft_toupper.c					\
 		  ft_print_afloat.c
 

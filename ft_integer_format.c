@@ -6,7 +6,7 @@
 /*   By: mbalon-s <mbalon-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 22:41:32 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/03/01 20:22:13 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/08/07 18:38:35 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ size_t				ft_integer_format(char **pdst, t_specification spec,
 	char			*str;
 
 	nbr = ft_get_signed_arg(ap, spec);
-	num_digits = ft_count_digits_signed(nbr);
+	num_digits = ft_cds(nbr);
 	if (nbr == 0 && ((spec.precision_set && spec.precision) ||
 						!spec.precision_set))
 		num_digits++;

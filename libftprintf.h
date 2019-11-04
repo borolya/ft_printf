@@ -6,7 +6,7 @@
 /*   By: mbalon-s <mbalon-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 17:33:09 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/03/02 22:10:18 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/08/07 18:44:29 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,33 +28,30 @@ typedef	enum			e_specificator
 	INTEGER,
 	OCT,
 	HEX,
-	HEX_UPPER,
 	UNSIGNED,
 	POINTER,
 	A_FLOAT,
-	A_FLOAT_UPPER,
 	FLOAT,
-    E_FLOAT,
-    G_FLOAT,
+	E_FLOAT,
+	G_FLOAT,
 }						t_specificator;
 
 typedef struct			s_smartstr
 {
 	char				*str;
-	size_t				len;//заполненная длина
-	size_t				size;//длина освобожденного массива
+	size_t				len;
+	size_t				size;
 }						t_smartstr;
 
 typedef struct			s_floating_point
 {
-	int					exponent;
-	unsigned long long	fraction;//diffrent between unsigneg long int? 
+	int					e;
+	unsigned long long	f;
 	unsigned int		sign : 1;
-	unsigned int		integer : 1;//?
+	unsigned int		integer : 1;
 	unsigned int		nan : 1;
 	unsigned int		inf : 1;
 }						t_floating_point;
-
 
 typedef struct			s_specification
 {
@@ -79,6 +76,7 @@ typedef struct			s_specification
 	unsigned			long_double_mod : 1;
 	unsigned			size_t_mod : 1;
 	unsigned			intmax_t_mod : 1;
+	unsigned			upper : 1;
 }						t_specification;
 
 typedef size_t			(*t_outputfunc) (char **pstr, t_specification, va_list);
@@ -119,15 +117,11 @@ size_t					ft_oct_format(char **pdst, t_specification spec,
 										va_list ap);
 size_t					ft_hex_format(char **pdst, t_specification spec,
 										va_list ap);
-size_t					ft_hex_upper_format(char **pdst, t_specification spec,
-										va_list ap);
 size_t					ft_unsigned_format(char **pdst, t_specification spec,
 										va_list ap);
 size_t					ft_pointer_format(char **pdst, t_specification spec,
 										va_list ap);
 size_t					ft_afloat_format(char **pdst, t_specification spec,
-										va_list ap);
-size_t					ft_afloat_upper_format(char **pdst, t_specification spec,
 										va_list ap);
 size_t					ft_float_format(char **pdst, t_specification spec,
 										va_list ap);
@@ -138,44 +132,43 @@ void					ft_format_hex(unsigned long long int nbr,
 										char *str, char b);
 size_t					ft_e_float_format(char **pdst, t_specification spec,
 							va_list ap);
-//void					ft_fill_floating_point(double nbr,
-//												t_floating_point *dst);
-//void					ft_fill_long_floating_point(long double nbr,
-//												t_floating_point *dst);
-int						ft_count_digits_signed(long long int nbr);
-
-///olya....
-
-char *print_float(t_floating_point fp, t_specification *spec, char *decimal, int comma);
-int	where_comma(t_floating_point fp, char **decimal, t_specification spec);
-char *print_e_float(t_floating_point fp, t_specification *spec, 
-							char *decimal, int order);
-char			*ft_strjoin(char const *s1, char const *s2);
-
-void mult_to_letter(char *result, char a);
-void mult_to_char(const char *s1, const char *s2, char *result);
-void mult_to_int(const char *str, unsigned long long nbr, char *result);
-
-
-
-int not_empty_end(const char *str, int count);
-//char *mult_to_letter(const char *s, int len, char a);
-size_t			print_float_nan_or_inf(char **pdst,
+int						ft_cds(long long int nbr);
+char					*ft_print_float(t_floating_point fp,
+							t_specification *spec, char *decimal, int comma);
+int						where_comma(t_floating_point fp,
+										char **decimal, t_specification spec);
+char					*print_e_float(t_floating_point fp,
+							t_specification *spec, char *decimal, int order);
+void					mult_to_letter(char *result, char a);
+void					mult_to_char(const char *s1, const char *s2,
+																char *result);
+void					mult_to_int(const char *str, unsigned long long nbr,
+																char *result);
+int						ft_float_rounding(char *decimal, int r_check);
+size_t					ft_print_float_nan_or_inf(char **pdst,
 												t_specification spec,
 												t_floating_point num);
 void					ft_fill_floating_point(double nbr,
 												t_floating_point *dst);
 void					ft_fill_long_floating_point(long double nbr,
 												t_floating_point *dst);
-int fill_space(char *str, int num_digits, t_specification *spec, t_floating_point fp);                            
-//lib
-size_t  ft_g_float_format(char **pdst, t_specification spec, 
+int						fill_space(char *str, int num_digits,
+							t_specification *spec, t_floating_point fp);
+size_t					ft_g_float_format(char **pdst, t_specification spec,
 								va_list ap);
-int ft_count_digit(unsigned long long int nbr);
-char *ft_longitoa(unsigned long long int n);
-void	*ft_memalloc(size_t size);
-char	*ft_strdup(const char *s);
-void reversestr(char *s);
-
+char					*take_g_decimal_float(t_floating_point fp,
+													t_specification *spec);
+char					*take_e_decimal_float(t_floating_point fp,
+													t_specification *spec);
+char					*ft_take_decimal_float(t_floating_point fp,
+													t_specification *spec);
+int						ft_count_digit(unsigned long long int nbr);
+char					*ft_longitoa(unsigned long long int n);
+void					*ft_memalloc(size_t size);
+void					ft_reversestr(char *s);
+void					ft_toupper(char *str);
+void					ft_print_afloat(t_floating_point fp,
+										t_specification spec, char *str,
+										int num_digits);
 
 #endif

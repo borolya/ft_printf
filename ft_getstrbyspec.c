@@ -6,7 +6,7 @@
 /*   By: mbalon-s <mbalon-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:48:05 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/03/02 22:10:00 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/08/07 18:53:55 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,19 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include "libftprintf.h"
+
+static t_outputfunc	get_output_function_extra(t_specificator specificator)
+{
+	if (specificator == A_FLOAT)
+		return (ft_afloat_format);
+	if (specificator == FLOAT)
+		return (ft_float_format);
+	if (specificator == E_FLOAT)
+		return (ft_e_float_format);
+	if (specificator == G_FLOAT)
+		return (ft_g_float_format);
+	return (NULL);
+}
 
 static t_outputfunc	get_output_function(t_specificator specificator)
 {
@@ -27,23 +40,11 @@ static t_outputfunc	get_output_function(t_specificator specificator)
 		return (ft_oct_format);
 	if (specificator == HEX)
 		return (ft_hex_format);
-	if (specificator == HEX_UPPER)
-		return (ft_hex_upper_format);
 	if (specificator == UNSIGNED)
 		return (ft_unsigned_format);
 	if (specificator == POINTER)
 		return (ft_pointer_format);
-	if (specificator == A_FLOAT)
-		return (ft_afloat_format);
-	if (specificator == A_FLOAT_UPPER)
-		return (ft_afloat_upper_format);
-	if (specificator == FLOAT)
-		return (ft_float_format);
-    if (specificator == E_FLOAT)
-       return (ft_e_float_format);
-    if (specificator == G_FLOAT)
-        return (ft_g_float_format);
-	return (NULL);
+	return (get_output_function_extra(specificator));
 }
 
 void				ft_getstrbyspec(t_specification spec,
@@ -65,6 +66,8 @@ void				ft_getstrbyspec(t_specification spec,
 			return ;
 		len = output_function(&s, spec, ap);
 	}
+	if (spec.upper)
+		ft_toupper(s);
 	ft_smartstrncat(pbuf, s, len);
 	if (s != NULL)
 		free(s);

@@ -6,7 +6,7 @@
 /*   By: mbalon-s <mbalon-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 18:46:13 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/28 21:10:49 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/08/07 19:05:00 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ t_smartstr	*ft_smartstrncat(t_smartstr *smartstr, const char *s, size_t len)
 		ft_flushsmartstr(smartstr);
 		return (smartstr);
 	}
-	while (smartstr->len + len >= smartstr->size)//освобождаем память
+	while (smartstr->len + len >= smartstr->size)
 	{
 		if (ft_expandsmartstr(smartstr) == -1)
 		{
 			ft_flushsmartstr(smartstr);
 			return (smartstr);
-        }
+		}
 	}
 	i = smartstr->len;
 	j = 0;
